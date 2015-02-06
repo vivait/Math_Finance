@@ -71,7 +71,7 @@ class Math_Finance
     * @static
     * @access public
     */
-    function effectiveRate($nominal_rate, $npery)
+    static function effectiveRate($nominal_rate, $npery)
     {
         $npery = (int)$npery;
         if ($npery < 0) {
@@ -92,7 +92,7 @@ class Math_Finance
     * @static
     * @access public
     */
-    function nominalRate($effect_rate, $npery)
+    static function nominalRate($effect_rate, $npery)
     {
         $npery = (int)$npery;
         if ($npery < 0) {
@@ -127,7 +127,7 @@ class Math_Finance
     * @static
     * @access public
     */
-    function presentValue($rate, $nper, $pmt, $fv = 0, $type = 0)
+    static function presentValue($rate, $nper, $pmt, $fv = 0, $type = 0)
     {
         if ($nper < 0) {
             return PEAR::raiseError('Number of periods must be positive');
@@ -159,7 +159,7 @@ class Math_Finance
     * @static
     * @access public
     */
-    function futureValue($rate, $nper, $pmt, $pv = 0, $type = 0)
+    static function futureValue($rate, $nper, $pmt, $pv = 0, $type = 0)
     {
         if ($nper < 0) {
             return PEAR::raiseError('Number of periods must be positive');
@@ -191,7 +191,7 @@ class Math_Finance
     * @static
     * @access public
     */
-    function payment($rate, $nper, $pv, $fv = 0, $type = 0)
+    static function payment($rate, $nper, $pv, $fv = 0, $type = 0)
     {
         if ($nper < 0) {
             return PEAR::raiseError('Number of periods must be positive');
@@ -223,7 +223,7 @@ class Math_Finance
     * @static
     * @access public
     */
-    function periods($rate, $pmt, $pv, $fv = 0, $type = 0)
+    static function periods($rate, $pmt, $pv, $fv = 0, $type = 0)
     {
         if ($type != FINANCE_PAY_END && $type != FINANCE_PAY_BEGIN) {
             return PEAR::raiseError('Payment type must be FINANCE_PAY_END or FINANCE_PAY_BEGIN');
@@ -260,7 +260,7 @@ class Math_Finance
     * @static
     * @access public
     */
-    function rate($nper, $pmt, $pv, $fv = 0, $type = 0, $guess = 0.1)
+    static function rate($nper, $pmt, $pv, $fv = 0, $type = 0, $guess = 0.1)
     {
         // To solve the equation
         require_once 'Math/Numerical/RootFinding/NewtonRaphson.php';
@@ -295,7 +295,7 @@ class Math_Finance
     * @static
     * @access private
     */
-    function _tvm($rate)
+    static function _tvm($rate)
     {
         require_once 'Math/Finance_FunctionParameters.php';
 
@@ -318,7 +318,7 @@ class Math_Finance
     * @static
     * @access private
     */
-    function _dtvm($rate)
+    static function _dtvm($rate)
     {
         require_once 'Math/Finance_FunctionParameters.php';
 
@@ -351,7 +351,7 @@ class Math_Finance
     * @static
     * @access public
     */
-    function interestPayment($rate, $per, $nper, $pv, $fv = 0, $type = 0)
+    static function interestPayment($rate, $per, $nper, $pv, $fv = 0, $type = 0)
     {
         if ($type != FINANCE_PAY_END && $type != FINANCE_PAY_BEGIN) {
             return PEAR::raiseError('Payment type must be FINANCE_PAY_END or FINANCE_PAY_BEGIN');
@@ -378,7 +378,7 @@ class Math_Finance
     * @static
     * @access public
     */
-    function principalPayment($rate, $per, $nper, $pv, $fv = 0, $type = 0)
+    static function principalPayment($rate, $per, $nper, $pv, $fv = 0, $type = 0)
     {
         if ($type != FINANCE_PAY_END && $type != FINANCE_PAY_BEGIN) {
             return PEAR::raiseError('Payment type must be FINANCE_PAY_END or FINANCE_PAY_BEGIN');
@@ -403,7 +403,7 @@ class Math_Finance
     * @static
     * @access private
     */
-    function _interestAndPrincipal($rate, $per, $nper, $pv, $fv, $type)
+    static function _interestAndPrincipal($rate, $per, $nper, $pv, $fv, $type)
     {
         $pmt = Math_Finance::payment($rate, $nper, $pv, $fv, $type);
         //echo "pmt: $pmt\n\n";
@@ -433,7 +433,7 @@ class Math_Finance
     * @access public
     */
 
-    function netPresentValue($rate, $values)
+    static function netPresentValue($rate, $values)
     {
         if (!is_array($values)) {
             return PEAR::raiseError('The cash flow series most be an array');
@@ -452,7 +452,7 @@ class Math_Finance
     * @static
     * @access public
     */
-    function internalRateOfReturn($values, $guess = 0.1)
+    static function internalRateOfReturn($values, $guess = 0.1)
     {
         // To solve the equation
         require_once 'Math/Numerical/RootFinding/NewtonRaphson.php';
@@ -483,7 +483,7 @@ class Math_Finance
     * @static
     * @access private
     */
-    function _npv($rate, $values = array())
+    static function _npv($rate, $values = array())
     {
         require_once 'Math/Finance_FunctionParameters.php';
 
@@ -513,7 +513,7 @@ class Math_Finance
     * @static
     * @access private
     */
-    function _dnpv($rate, $values = array())
+    static function _dnpv($rate, $values = array())
     {
         require_once 'Math/Finance_FunctionParameters.php';
 
@@ -542,7 +542,7 @@ class Math_Finance
     * @static
     * @access public
     */
-    function modifiedInternalRateOfReturn($values, $finance_rate, $reinvest_rate)
+    static function modifiedInternalRateOfReturn($values, $finance_rate, $reinvest_rate)
     {
         if (!is_array($values)) {
             return PEAR::raiseError('The cash flow series most be an array');
@@ -587,7 +587,7 @@ class Math_Finance
     * @static
     * @access public
     */
-    function daysDifference($date1, $date2, $basis)
+    static function daysDifference($date1, $date2, $basis)
     {
         $y1 = date('Y', $date1);
         $m1 = date('n', $date1);
@@ -628,7 +628,7 @@ class Math_Finance
     * @static
     * @access public
     */
-    function daysPerYear($year, $basis)
+    static function daysPerYear($year, $basis)
     {
         switch ($basis) {
             case FINANCE_COUNT_NASD:
@@ -655,7 +655,7 @@ class Math_Finance
     * @static
     * @access public
     */
-    function TBillYield($settlement, $maturity, $pr)
+    static function TBillYield($settlement, $maturity, $pr)
     {
         if ($settlement >= $maturity) {
             return PEAR::raiseError('Maturity must happen before settlement!');
@@ -681,7 +681,7 @@ class Math_Finance
     * @static
     * @access public
     */
-    function TBillPrice($settlement, $maturity, $discount)
+    static function TBillPrice($settlement, $maturity, $discount)
     {
         if ($settlement >= $maturity) {
             return PEAR::raiseError('Maturity must happen before settlement!');
@@ -707,7 +707,7 @@ class Math_Finance
     * @static
     * @access public
     */
-    function TBillEquivalentYield($settlement, $maturity, $discount)
+    static function TBillEquivalentYield($settlement, $maturity, $discount)
     {
         if ($settlement >= $maturity) {
             return PEAR::raiseError('Maturity must happen before settlement!');
@@ -748,7 +748,7 @@ class Math_Finance
     * @static
     * @access public
     */
-    function discountRate($settlement, $maturity, $pr, $redemption, $basis = 0)
+    static function discountRate($settlement, $maturity, $pr, $redemption, $basis = 0)
     {
         $days_per_year = Math_Finance::daysPerYear(date('Y', $settlement), $basis);
         $dsm = Math_Finance::daysDifference($settlement, $maturity, $basis);
@@ -774,7 +774,7 @@ class Math_Finance
     * @static
     * @access public
     */
-    function priceDiscount($settlement, $maturity, $discount, $redemption, $basis = 0)
+    static function priceDiscount($settlement, $maturity, $discount, $redemption, $basis = 0)
     {
         $days_per_year = Math_Finance::daysPerYear(date('Y', $settlement), $basis);
         $dsm = Math_Finance::daysDifference($settlement, $maturity, $basis);
@@ -799,7 +799,7 @@ class Math_Finance
     * @static
     * @access public
     */
-    function depreciationFixedDeclining($cost, $salvage, $life, $period, $month = 12)
+    static function depreciationFixedDeclining($cost, $salvage, $life, $period, $month = 12)
     {
         $cost       = (float) $cost;
         $salvage    = (float) $salvage;
@@ -842,7 +842,7 @@ class Math_Finance
     * @static
     * @access public
     */
-    function depreciationStraightLine($cost, $salvage, $life)
+    static function depreciationStraightLine($cost, $salvage, $life)
     {
         $life       = (int) $life;
         if ($cost < 0 || $life < 0) {
@@ -864,7 +864,7 @@ class Math_Finance
     * @static
     * @access public
     */
-    function depreciationSYD($cost, $salvage, $life, $per)
+    static function depreciationSYD($cost, $salvage, $life, $per)
     {
         return (($cost - $salvage) * ($life - $per + 1) * 2 / ($life) / ($life +1));
     }
